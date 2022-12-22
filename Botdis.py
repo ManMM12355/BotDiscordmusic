@@ -1,7 +1,7 @@
 import discord
 from discord.utils import get
 from discord.ext import commands
-from song2 import songAPI
+from song import songAPI
 
 Token = ''
 
