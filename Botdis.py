@@ -37,7 +37,6 @@ async def help(ctx):
     emBed.add_field(name="!np", value="Now music", inline=False)
     emBed.add_field(name="!vol ค่าความดัง", value="change volume", inline=False)
     emBed.add_field(name="!leave", value="Bot leave", inline=False)
-    emBed.set_footer(text='### MAN Create Bot in Discord ###')
 
     await ctx.channel.send(embed=emBed)
 
