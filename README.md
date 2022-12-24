@@ -1,3 +1,4 @@
 # BOT DISCORD MUSIC 
 This BOT Discord python
-command use ! 
+- command use ! 
+- Token is Token in discord
