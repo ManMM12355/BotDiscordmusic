@@ -173,7 +173,6 @@ async def Help(i: discord.Interaction, button):
     emBed.add_field(name="!np", value="Now music", inline=True)
     emBed.add_field(name="!vol ค่าความดัง", value="change volume", inline=True)
     emBed.add_field(name="!leave", value="Bot leave", inline=False)
-    emBed.set_footer(text='### MAN Create Bot in Discord ###')
 
     await i.respond(embed=emBed, delete_after=20)
 
