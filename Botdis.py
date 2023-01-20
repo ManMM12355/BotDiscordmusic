@@ -3,26 +3,33 @@ from discord.utils import get
 from discord.ext import commands
 from song import songAPI
 
+# Token variable for the bot, replace with your own
 Token = ''
 
+# Creating the bot instance with command prefix "!" and disabling the default help command
 bot = commands.Bot(command_prefix='!',help_command=None)
 
+# Creating an instance of the custom songAPI class
 songsInstance = songAPI()
 
+# Event that triggers when the bot is ready
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
     print("------")
     await bot.change_presence(activity=discord.Game(name="!help"))
 
+# Command for testing bot's latency
 @bot.command()
 async def ping(ctx):
     await ctx.send(f"Pong! {round(bot.latency * 1000)}ms", delete_after=5)
 
+# Command for testing bot's response
 @bot.command()
 async def test(ctx, *, par):
     await ctx.channel.send("{}".format(par), delete_after=5)
 
+# Command for displaying all available commands
 @bot.command() 
 async def help(ctx):
     emBed = discord.Embed(title="Bot help", description="All available bot commands", color=0x42f5a7)
@@ -40,15 +47,21 @@ async def help(ctx):
 
     await ctx.channel.send(embed=emBed)
 
+# Command for generating buttons
 @bot.command()
 async def button(ctx):
+    # Calling the button method from the songAPI class
     await songsInstance.button(ctx)
 
+#Command for playing music
 @bot.command() 
 async def play(ctx,* ,search: str):
+    # Calling the play method from the songAPI class
     await songsInstance.play(ctx, search)
+    # Generating buttons after music starts playing
     await songsInstance.button(ctx)
 
+#Event for handling the "Resume" button click
 @bot.on_click(custom_id='Resume')
 async def resume(i: discord.Interaction, button):
     await i.defer()
@@ -67,7 +80,8 @@ async def resume(i: discord.Interaction, button):
     else:
         await i.channel.send("Bot is not playing", delete_after=5)
         return
-
+    
+#Event for handling the "Pause" button click
 @bot.on_click(custom_id='Pause')
 async def pause(i: discord.Interaction, button):
     await i.defer()
@@ -86,7 +100,8 @@ async def pause(i: discord.Interaction, button):
     else:
         await i.channel.send("Bot is not playing", delete_after=5)
         return
-
+    
+#Event for handling the "Stop" button click
 @bot.on_click(custom_id='Stop')
 async def stop(i: discord.Interaction, button):
     await i.defer()
@@ -105,7 +120,8 @@ async def stop(i: discord.Interaction, button):
     else:
         await i.channel.send("Bot is not playing", delete_after=5)
         return
-
+    
+#Event for handling the "Skip" button click
 @bot.on_click(custom_id='Skip')
 async def skip(i: discord.Interaction, button):
     await i.defer()
@@ -124,7 +140,8 @@ async def skip(i: discord.Interaction, button):
     else:
         await i.channel.send("Bot is not playing", delete_after=5)
         return
-
+    
+#Event for handling the "List" button click
 @bot.on_click(custom_id='List')
 async def list(i: discord.Interaction, button):
     await i.defer()
@@ -134,7 +151,8 @@ async def list(i: discord.Interaction, button):
         await i.channel.send("Bot is not connected to vc", delete_after=5)
         return  
     await songsInstance.queueList(i.channel)
-
+    
+#Event for handling the "Now playing" button click
 @bot.on_click(custom_id='np')
 async def np(i: discord.Interaction, button):
     await i.defer()
@@ -144,7 +162,8 @@ async def np(i: discord.Interaction, button):
         await i.channel.send("Bot is not connected to vc", delete_after=5)
         return  
     await songsInstance.now_playing_(i.channel)
-
+    
+#Event for handling the "Disconnect" button click
 @bot.on_click(custom_id='Disconnect')
 async def Disconnect(i: discord.Interaction, button):
     await i.defer()
@@ -156,7 +175,8 @@ async def Disconnect(i: discord.Interaction, button):
 
     await voice_client.disconnect()
     await i.respond("Bot Disconnect", delete_after=5)
-
+    
+#Event for handling the "help" button click
 @bot.on_click(custom_id='Help')
 async def Help(i: discord.Interaction, button):
     await i.defer()
@@ -176,6 +196,7 @@ async def Help(i: discord.Interaction, button):
 
     await i.respond(embed=emBed, delete_after=20)
 
+#Event for handling the "Connect" button click
 @bot.on_click(custom_id='Connect')
 async def Connect(i: discord.Interaction, button):
     await i.defer()
@@ -188,6 +209,7 @@ async def Connect(i: discord.Interaction, button):
     else:
         await i.respond("Bot is already connected to vc", delete_after=5)
 
+#Event for handling the "Volume Up" button click
 @bot.on_click(custom_id='Volume Up')
 async def Volume_Up(i: discord.Interaction, button):
     await i.defer()
@@ -209,6 +231,7 @@ async def Volume_Up(i: discord.Interaction, button):
     else:
         await i.respond('No music is playing', delete_after=10)
 
+#Event for handling the "Volume Down" button click
 @bot.on_click(custom_id='Volume Down')
 async def Volume_Down(i: discord.Interaction, button):
     await i.defer()
@@ -229,6 +252,7 @@ async def Volume_Down(i: discord.Interaction, button):
         await i.respond('Volume is now at {}%'.format(int(voice_client.source.volume * 100)), delete_after=10)
     else:
         await i.respond('No music is playing', delete_after=10)
+
 
 @bot.command()
 async def stop(ctx):
@@ -294,6 +318,7 @@ async def countuser(ctx):
 async def volc(ctx):
     await songsInstance.vol_c(ctx)
 
+#Running the bot
 if __name__ == '__main__':
     try:
         print('Start')
