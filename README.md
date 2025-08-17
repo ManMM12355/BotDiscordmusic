@@ -55,6 +55,3 @@ This is a Discord bot that allows users to play and control music in a Discord v
 
 This is just a sample script, you need to add your own token to use the bot.
 
-### Contact
-
-For any questions or support, contact me at [Linkedin](https://www.linkedin.com/in/mongkon-gruaysawad-824774224/)
