@@ -1,4 +1,4 @@
 discord.py==1.5.1
-youtube-dl==2021.12.17
-youtube_dlc==2021.4.4
+youtube-dl
+youtube_dlc
 PyNaCl==1.4.0
